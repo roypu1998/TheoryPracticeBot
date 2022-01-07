@@ -36,4 +36,5 @@ class MarkUp:
         markup = ReplyKeyboardMarkup()
         for ans in self.lstAnswers:
             markup.row(ans)
+        markup.row('/Finish')
         return markup
