@@ -1,4 +1,5 @@
 from telebot import TeleBot
+from telebot.types import ReplyKeyboardRemove
 from db_TheoryQuestion import QuestionTheory
 from MarkUp import MarkUp
 from random import randint
@@ -68,12 +69,12 @@ def answer_message_query(call):
         sendQuestion(call)
 
     elif call.text == "/Finish":
-        bot.send_message(call.chat.id,f"GoodBye {call.from_user.first_name} 👋 ")
+        bot.send_message(call.chat.id,f"GoodBye {call.from_user.first_name} 👋 ",reply_markup= ReplyKeyboardRemove(True))
 
     elif limit > 29:
         bot.send_message(call.chat.id,f"You pass {limit - 1} Question.\n"
                                       f"Do you want continue? \n"
-                                      f"/continue or /Finish")
+                                      f"/continue or /Finish",reply_markup= ReplyKeyboardRemove(True))
 
     elif call.text == return_correct_answer():
 
