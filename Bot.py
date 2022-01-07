@@ -3,7 +3,9 @@ from db_TheoryQuestion import QuestionTheory
 from MarkUp import MarkUp
 from random import randint
 
-TOKEN = '1440147560:AAEPQcO5676me59Eix1R7xMG1Hd9ka_Wazc'
+with open('token.txt') as f:
+    TOKEN = f.read().strip()
+
 bot = TeleBot(TOKEN)
 
 global phone_no, correct, incorrect_Point, correct_Point, markup, limit
