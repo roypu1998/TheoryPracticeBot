@@ -2,11 +2,13 @@ from telebot import TeleBot
 from db_TheoryQuestion import QuestionTheory
 from MarkUp import MarkUp
 from random import randint
+import os
 
 with open('token.txt') as f:
     TOKEN = f.read().strip()
 
-bot = TeleBot(TOKEN)
+token = os.environ.get('API_TOKEN',None)
+bot = TeleBot(token)
 
 global phone_no, correct, incorrect_Point, correct_Point, markup, limit
 
