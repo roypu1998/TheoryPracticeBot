@@ -63,6 +63,9 @@ def answer_message_query(call):
         sendQuestion(call)
 
     elif call.text == "/Finish":
+        bot.send_message(call.chat.id,f"Ok! You get {correct_Point} Correct Answers and {incorrect_Point} Mistakes.")
+        limit = 0
+        correct_Point, incorrect_Point = 0, 0
         bot.send_message(call.chat.id,f"GoodBye {call.from_user.first_name} 👋 ")
 
     elif limit > 29 :
