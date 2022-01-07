@@ -4,8 +4,6 @@ from MarkUp import MarkUp
 from random import randint
 import os
 
-with open('token.txt') as f:
-    TOKEN = f.read().strip()
 
 token = os.environ.get('API_TOKEN',None)
 bot = TeleBot(token)
