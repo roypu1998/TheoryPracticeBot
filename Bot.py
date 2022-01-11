@@ -5,6 +5,7 @@ from MarkUp import MarkUp
 from random import randint
 from DB_FireBase import User
 import os
+import time
 
 
 token = os.environ.get('API_TOKEN',None)
@@ -27,7 +28,8 @@ def postOnDB(call):
     if call.text == str(call.from_user.id) and flagStart :
         app.PutOnDatabase()
         msg=bot.send_message(call.chat.id, f'Post {call.from_user.username} on Database ...')
-        bot.edit_message_text('Ok, you are in!\nEnter /start to check it is works',call.chat.id, msg.message_id)
+        time.sleep(2)
+        bot.edit_message_text('Ok, you are in!\nclick /start to check it is works',call.chat.id, msg.message_id)
     else:
         bot.send_message(call.chat.id, f'[WARNING] id does not exists.\ntry to register again /start')
 
