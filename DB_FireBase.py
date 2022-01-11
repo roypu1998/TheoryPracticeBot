@@ -5,7 +5,7 @@ class User():
     def __init__(self,user_name,user_id):
         self.username = user_name
         self.user_id = user_id
-        self.DB_URL = os.environ.get('FireBaseURL',None)
+        self.DB_URL = os.environ.get('FIREBASE_URL',None)
         self.app = firebase.FirebaseApplication(self.DB_URL, None)
 
     def PutOnDatabase(self):
