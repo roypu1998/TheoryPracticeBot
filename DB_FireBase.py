@@ -20,5 +20,5 @@ class User():
 
         return flag
 
-#app = firebase.FirebaseApplication('https://users-a9d23-default-rtdb.firebaseio.com/', None)
+
 
