@@ -3,16 +3,15 @@ from telebot.types import ReplyKeyboardRemove
 from db_TheoryQuestion import QuestionTheory
 from MarkUp import MarkUp
 from random import randint
-from DB_FireBase import User
+from DBChannel_Cloud import User
 import os
 import time
 
-
 token = os.environ.get('API_TOKEN',None)
-bot = TeleBot(token=token)
+bot = TeleBot(token=TOKEN)
 
 
-global phone_no, correct, incorrect_Point, correct_Point, markup, limit, mid, msgIncorrect_id, app, flagStart
+global phone_no, correct, incorrect_Point, correct_Point, markup, limit, mid, msgIncorrect_id, flagStart,cloud
 
 msgIncorrect_id=[]
 incorrect_Point = 0
@@ -25,10 +24,11 @@ flagStart = False
 markup = MarkUp([])
 @bot.message_handler(func=lambda call: True if call.text.isdigit() and len(call.text) > 8 and len(call.text) < 12 else False)
 def postOnDB(call):
+    global cloud
     if call.text == str(call.from_user.id) and flagStart :
-        app.PutOnDatabase()
         msg=bot.send_message(call.chat.id, f'Post {call.from_user.username} on Database ...')
         time.sleep(2)
+        cloud.POST_ON_CLOUD()
         bot.edit_message_text('Ok, you are in!\nclick /start to check it is works',call.chat.id, msg.message_id)
     else:
         bot.send_message(call.chat.id, f'[WARNING] id does not exists.\ntry to register again /start')
@@ -41,20 +41,22 @@ def number_handler(msg):
 
 @bot.message_handler(commands='start')
 def handler_on_start(message):
-    global app,flagStart
+    global flagStart,cloud
     flagStart = True
     bot.send_chat_action(message.chat.id,'typing')
     username = message.from_user.username
     user_id = message.from_user.id
-    app = User(user_name=username, user_id=user_id)
-    flag = app.GetFromDatabase(user_name=username)
+    cloud = User(username,user_id)
+    flag = cloud.GET_FROM_CLOUD(username)
     if flag :
         bot.send_message(message.chat.id,f'Hello {message.from_user.first_name}!\n'
-                                     f'Welcome to Theory practice.\n'
-                                     f'For start please press /StartGame .')
+                                 f'Welcome to Theory practice.\n'
+                                 f'For start please press /StartGame .')
     else:
         bot.send_message(message.chat.id, f'Please go to https://t.me/userinfobot ,get your id and write it.')
-        bot.register_next_step_handler(message,postOnDB)
+
+
+
 
 def return_correct_answer():
     global correct
